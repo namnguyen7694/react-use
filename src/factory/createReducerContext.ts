@@ -4,14 +4,18 @@ const createReducerContext = <R extends React.Reducer<any, any>>(
   reducer: R,
   defaultInitialState: React.ReducerState<R>
 ) => {
-  const context = createContext<
-    [React.ReducerState<R>, React.Dispatch<React.ReducerAction<R>>] | undefined
-  >(undefined);
+  const context =
+    createContext<[React.ReducerState<R>, React.Dispatch<React.ReducerAction<R>>] | undefined>(
+      undefined
+    );
   const providerFactory = (props, children) => createElement(context.Provider, props, children);
 
-  const ReducerProvider: React.FC<{ initialState?: React.ReducerState<R> }> = ({
+  const ReducerProvider = ({
     children,
     initialState,
+  }: {
+    children?: React.ReactNode;
+    initialState?: React.ReducerState<R>;
   }) => {
     const state = useReducer<R>(
       reducer,
